@@ -1,19 +1,24 @@
 <?php
-defined('_JEXEC') or die('Restircted access');
+/**
+ * Joomla! module mod_gmap
+ *
+ * @author 2GLux
+ * @package GMap
+ * @license GNU/GPL
+ *
+ */
 
-if(!defined('DS')){
-	define('DS',DIRECTORY_SEPARATOR);
-}
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
-require_once (dirname(__FILE__).DS.'helper.php');
+//include helper class
+require_once JPATH_ADMINISTRATOR.'/components/com_gmap/helpers/helper.php';
 
-$api_key = $params->get('api_key');
-$width = $params->get('width');
-$height = $params->get('height');
-$zoom = $params->get('zoom');
-list($cLat, $cLng) = preg_split('/:/', $params->get('centerPoint'));
-list($p1_lat, $p1_lng, $p1_info) = preg_split('/:/', $params->get('point1'));
-list($p2_lat, $p2_lng, $p2_info) = preg_split('/:/', $params->get('point2'));
-list($p3_lat, $p3_lng, $p3_info) = preg_split('/:/', $params->get('point3'));
+$gmap = new GMapHelper;
+$gmap->id = $params->get('gmap_id', 1);
+$gmap->module_id = $module->id;
+$gmap->type = 'module';
+$gmap->width = $params->get('width', 500);
+$gmap->height = $params->get('height', 300);
 
-require(JModuleHelper::getLayoutPath('mod_gmap'));
+echo $gmap->render_html();

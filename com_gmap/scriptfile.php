@@ -2,14 +2,14 @@
 /**
  * Joomla! component com_gmap
  *
- * @author 2GLux.com
+ * @author 2GLux
  * @package GMap
  * @license GNU/GPL
  *
  */
 
 // no direct access
-defined('_JEXEC') or die('Restircted access');
+defined('_JEXEC') or die('Restricted access');
 
 class com_gmapInstallerScript {
 
