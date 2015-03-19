@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" group="system" version="2.5" method="upgrade">
+    <name>System - GMap</name>
+    <author>2GLux</author>
+    <creationDate>March 2015</creationDate>
+    <copyright>Copyright (C) 2014 - 2015 2GLux. All rights reserved.</copyright>
+    <license>GNU/GPL</license>
+    <authorEmail>info@2glux.com</authorEmail>
+    <authorUrl>http://2glux.com</authorUrl>
+    <version>1.0.0</version>
+    <description>PLG_GMAP_DESCRIPTION</description>
+
+    <files>
+        <filename>index.html</filename>
+        <filename plugin="gmap">gmap.php</filename>
+    </files>
+    
+    <config>
+        <fields name="params">
+        </fields>
+    </config>
+</extension>
