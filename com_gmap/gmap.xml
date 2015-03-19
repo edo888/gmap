@@ -14,25 +14,31 @@
 
     <install><sql><file charset="utf8" driver="mysql">install.sql</file></sql></install>
     <uninstall><sql><file charset="utf8" driver="mysql">uninstall.sql</file></sql></uninstall>
-    
+
     <files folder="site">
         <filename>index.html</filename>
     </files>
-    
+
     <languages folder="site">
         <language tag="en-GB">language/en-GB/en-GB.com_gmap.ini</language>
     </languages>
 
     <administration>
         <menu view="cpanel">COM_GMAP_MENU</menu>
-        
+
         <files folder="admin">
-            <filename>index.html</filename>    
+            <folder>controllers</folder>
+            <folder>views</folder>
+            <folder>models</folder>
+            <folder>helpers</folder>
+            <filename>controller.php</filename>
+            <filename>gmap.php</filename>
+            <filename>index.html</filename>
         </files>
-        
+
         <languages folder="admin">
-            <language tag="en-GB">language/en-GB/en-GB.COM_GMAP.ini</language>
-            <language tag="en-GB">language/en-GB/en-GB.COM_GMAP.sys.ini</language>
+            <language tag="en-GB">language/en-GB/en-GB.com_gmap.ini</language>
+            <language tag="en-GB">language/en-GB/en-GB.com_gmap.sys.ini</language>
         </languages>
     </administration>
 </extension>
