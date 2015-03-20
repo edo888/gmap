@@ -21,18 +21,18 @@ class com_gmapInstallerScript {
     function install($parent) {
         // installing module
         $module_installer = new JInstaller;
-        if(@$module_installer->install(dirname(__FILE__).DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'mod_gmap'))
+        if(@$module_installer->install(dirname(__FILE__).'/assets/mod_gmap'))
             echo '<p>'.JText::_('COM_GMAP_MODULE_INSTALL_SUCCESS').'</p>';
         else
            echo '<p>'.JText::_('COM_GMAP_MODULE_INSTALL_FAILED').'</p>';
-        
+
         // installing plugin
         $plugin_installer = new JInstaller;
-        if($plugin_installer->install(dirname(__FILE__).DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'plg_gmap'))
+        if($plugin_installer->install(dirname(__FILE__).'/assets/plg_gmap'))
             echo '<p>'.JText::_('COM_GMAP_PLUGIN_INSTALL_SUCCESS').'</p>';
         else
             echo '<p>'.JText::_('COM_GMAP_PLUGIN_INSTALL_FAILED').'</p>';
-        
+
         // enabling plugin
         $db = JFactory::getDBO();
         $db->setQuery('UPDATE #__extensions SET enabled = 1 WHERE element = "gmap" AND folder = "system"');
@@ -46,7 +46,7 @@ class com_gmapInstallerScript {
      */
     function uninstall($parent) {
         $db = JFactory::getDBO();
-        
+
         $sql = 'SELECT `extension_id` AS id, `name`, `element`, `folder` FROM #__extensions WHERE `type` = "module" AND ( (`element` = "mod_gmap") ) ';
         $db->setQuery($sql);
         $gmap_module = $db->loadObject();
@@ -55,7 +55,7 @@ class com_gmapInstallerScript {
              echo '<p>'.JText::_('COM_GMAP_MODULE_UNINSTALL_SUCCESS').'</p>';
         else
             echo '<p>'.JText::_('COM_GMAP_MODULE_UNINSTALL_FAILED').'</p>';
-        
+
         $db->setQuery("select extension_id from #__extensions where name = 'System - GMap' and type = 'plugin' and element = 'gmap'");
         $cis_plugin = $db->loadObject();
         $plugin_uninstaller = new JInstaller;

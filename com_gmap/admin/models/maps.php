@@ -112,7 +112,6 @@ class GmapModelMaps extends JModelList {
         $orderDirn  = $this->state->get('list.direction', 'asc');
 
         $query->order($db->escape($orderCol.' '.$orderDirn));
-        //$query->group('sa.id');
 
         return $query;
     }
