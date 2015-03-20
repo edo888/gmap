@@ -27,7 +27,7 @@ class GmapModelMaps extends JModelList {
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                     'm.id',
-                    'm.map'
+                    'm.name'
             );
         }
 
@@ -98,7 +98,7 @@ class GmapModelMaps extends JModelList {
                 )
         );
 
-        $query->from('#__gmaps_data AS m');
+        $query->from('#__gmap_data AS m');
 
         // Filter by search in name.
         $search = $this->getState('filter.search');

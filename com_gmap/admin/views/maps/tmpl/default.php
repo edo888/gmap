@@ -95,8 +95,8 @@ jimport('joomla.filter.output');
                 </tr>
             </thead>
             <tbody>
-             <?php
-            foreach ($this->items as $i => $row) :
+            <?php
+            foreach ($this->items as $i => $row):
                 JFilterOutput::objectHTMLSafe($row, ENT_QUOTES);
 
                 $link        = JRoute::_('index.php?option=com_gmap&task=map.edit&id='. $row->id);
@@ -110,14 +110,13 @@ jimport('joomla.filter.output');
                         <?php echo $checked; ?>
                     </td>
                     <td align="center">
-                        <a href="<?php echo $link; ?>" title="<?php echo JText::_( 'Edit Complaint Category' ); ?>">
-                            <?php echo $row->map; ?></a>
+                        <a href="<?php echo $link; ?>" title="<?php echo JText::_( 'Edit Map' ); ?>"><?php echo $row->name; ?></a>
                     </td>
                     <td align="center">
                         <?php echo $row->id; ?>
                     </td>
                 </tr>
-                <?php endforeach; ?>
+            <?php endforeach; ?>
             </tbody>
             <tfoot>
                 <tr>
