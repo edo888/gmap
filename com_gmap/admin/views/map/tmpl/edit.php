@@ -238,6 +238,11 @@ function editMap($row) {
                 });
                 setSelection(newShape);
 
+                if(newShape.type == 'marker') {
+                    newShape.infoWindow = new google.maps.InfoWindow({content: 'my test'});
+                    (function(map,marker) {google.maps.event.addListener(marker, 'click', function() {marker.infoWindow.open(map, marker);})})(drawingManager.map, newShape);
+                }
+
                 gmap_data.push(newShape);
             });
 
@@ -253,6 +258,10 @@ function editMap($row) {
             for(var i = 0; i < gmap_data.length; i++) {
                 setSelection(gmap_data[i]);
                 (function(newShape) {google.maps.event.addListener(newShape, 'click', function() {setSelection(newShape);});})(gmap_data[i]);
+                if(gmap_data[i].type == 'marker') {
+                    gmap_data[i].infoWindow = new google.maps.InfoWindow({content: 'my test'});
+                    (function(map,marker) {google.maps.event.addListener(marker, 'click', function() {marker.infoWindow.open(map, marker);})})(drawingManager.map, gmap_data[i]);
+                }
             }
         }
 
