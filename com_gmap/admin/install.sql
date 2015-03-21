@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `#__gmap_data` (
   `data` text NOT NULL,
   `center` varchar(100) NOT NULL default '[40.169997,44.52]',
   `zoom` tinyint(2) NOT NULL default 10,
+  `mapTypeId` ENUM('ROADMAP', 'HYBRID', 'SATELLITE', 'TERRAIN') not null default 'ROADMAP',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

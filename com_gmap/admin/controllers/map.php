@@ -70,6 +70,7 @@ class GmapControllerMap extends JControllerForm {
             $map->set('data', JRequest::getVar('data'));
             $map->set('center', JRequest::getVar('center'));
             $map->set('zoom', JRequest::getVar('zoom'));
+            $map->set('mapTypeId', JRequest::getVar('mapTypeId'));
 
             //$map->set('description', JRequest::getVar('description'));
 
@@ -90,6 +91,7 @@ class GmapControllerMap extends JControllerForm {
             $map->set('data', null);
             $map->set('center', null);
             $map->set('zoom', null);
+            $map->set('mapTypeId', null);
             //$map->set('description', null);
             $map->load();
 
@@ -98,6 +100,7 @@ class GmapControllerMap extends JControllerForm {
             $map->set('data', JRequest::getVar('data'));
             $map->set('center', JRequest::getVar('center'));
             $map->set('zoom', JRequest::getVar('zoom'));
+            $map->set('mapTypeId', JRequest::getVar('mapTypeId'));
             //$map->set('description', JRequest::getVar('description'));
 
             // storing updated data

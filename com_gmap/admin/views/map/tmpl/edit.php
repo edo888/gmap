@@ -22,11 +22,13 @@ $row = $db->loadObject();
 $document = JFactory::getDocument();
 $document->addScript(Juri::base().'components/com_gmap/assets/js/io.lib.js');
 $document->addScript('http://maps.google.com/maps/api/js?sensor=false&libraries=drawing');
-$document->addStyleDeclaration('#panel {width:200px;font-family:Arial, sans-serif;font-size:13px;margin:10px;}
+$document->addStyleDeclaration('#panel {width:250px;font-family:Arial, sans-serif;font-size:13px;margin:10px;}
 #gmap {width:1000px;height:600px;}
 #color-palette {clear:both;}
-.color-button {width:14px;height:14px;font-size:0;margin:2px;float:left;cursor:pointer;}
+#customcolor {margin-left:2px;}
+.color-button {width:20px;height:20px;font-size:0;margin:2px;float:left;cursor:pointer;}
 #delete-button {margin-top:5px;}
+.minicolors-opacity-slider {left:180px !important;}
 ');
 
 editMap($row);
@@ -37,11 +39,34 @@ function editMap($row) {
 
     JHTML::_('behavior.modal');
 
+
+    // include colorpicker
+    //JHtml::_('behavior.colorpicker');
+    JHtml::_('jquery.framework');
+    JHtml::_('script', 'jui/jquery.minicolors.min.js', false, true);
+    JHtml::_('stylesheet', 'jui/jquery.minicolors.css', false, true);
+    JFactory::getDocument()->addScriptDeclaration("
+        jQuery(document).ready(function (){
+                jQuery('.minicolors').each(function() {
+                        jQuery(this).minicolors({
+                                control: jQuery(this).attr('data-control') || 'hue',
+                                position: jQuery(this).attr('data-position') || 'right',
+                                opacity: jQuery(this).attr('data-opacity') || true,
+                                change: function(hex, opacity) {setSelectedShapeColor(hex, opacity);},
+                                changeDelay: 100,
+                                theme: 'bootstrap'
+                        });
+                });
+        });
+    ");
+
     if(empty($row->center))
         $row->center = '[40.169997,44.52]';
     $row->center = json_decode($row->center);
     if(empty($row->zoom))
         $row->zoom = 10;
+    if(empty($row->mapTypeId))
+        $row->mapTypeId = 'ROADMAP';
 
     //echo '<pre>', print_r($row, true), '</pre>';
     ?>
@@ -60,6 +85,7 @@ function editMap($row) {
                 document.getElementById('gmap_data').value = JSON.stringify(IO.IN(gmap_data, false));
                 document.getElementById('gmap_center').value = JSON.stringify([drawingManager.map.getCenter().lat(), drawingManager.map.getCenter().lng()]);
                 document.getElementById('gmap_zoom').value = drawingManager.map.getZoom();
+                document.getElementById('gmap_mapTypeId').value = drawingManager.map.getMapTypeId().toUpperCase();
                 submitform(pressbutton);
             }
 
@@ -91,6 +117,12 @@ function editMap($row) {
         function deleteSelectedShape() {
             if (selectedShape) {
                 selectedShape.setMap(null);
+                for(var i = 0; i < gmap_data.length; i++) {
+                    if(gmap_data[i] == selectedShape) {
+                        gmap_data.splice(i, 1);
+                        break;
+                    }
+                }
             }
         }
 
@@ -120,12 +152,14 @@ function editMap($row) {
             drawingManager.set('polygonOptions', polygonOptions);
         }
 
-        function setSelectedShapeColor(color) {
+        function setSelectedShapeColor(color, opacity) {
             if (selectedShape) {
                 if (selectedShape.type == google.maps.drawing.OverlayType.POLYLINE) {
                     selectedShape.set('strokeColor', color);
+                    selectedShape.set('strokeOpacity', opacity);
                 } else {
                     selectedShape.set('fillColor', color);
+                    selectedShape.set('fillOpacity', opacity);
                 }
             }
         }
@@ -136,7 +170,7 @@ function editMap($row) {
             button.style.backgroundColor = color;
             google.maps.event.addDomListener(button, 'click', function() {
                 selectColor(color);
-                setSelectedShapeColor(color);
+                setSelectedShapeColor(color, 0.8);
             });
 
             return button;
@@ -157,8 +191,14 @@ function editMap($row) {
             var map = new google.maps.Map(document.getElementById('gmap'), {
                 zoom: <?php echo $row->zoom; ?>,
                 center: new google.maps.LatLng(<?php echo $row->center[0]; ?>, <?php echo $row->center[1]; ?>),
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                disableDefaultUI: true,
+                mapTypeId: google.maps.MapTypeId.<?php echo $row->mapTypeId; ?>,
+                disableDefaultUI: false,
+                streetViewControl: false,
+                scaleControl: true,
+                rotateControl: true,
+                panControl: true,
+                overviewMapControl: true,
+                mapTypeControl: true,
                 zoomControl: true
             });
 
@@ -171,7 +211,7 @@ function editMap($row) {
             // Creates a drawing manager attached to the map that allows the user to draw
             // markers, lines, and shapes.
             drawingManager = new google.maps.drawing.DrawingManager({
-                drawingMode: google.maps.drawing.OverlayType.POLYGON,
+                drawingMode: null,
                 markerOptions: {
                     draggable: true
                 },
@@ -249,9 +289,9 @@ function editMap($row) {
             <tr>
                 <td colspan="2" style="position:absolute;">
                     <div id="panel">
-                        <div id="color-palette"></div>
+                        <div id="color-palette"><input type="text" name="customcolor" id="customcolor" class="minicolors minicolors-with-opacity" value="#000000" /></div>
                         <div>
-                            <button id="delete-button">Delete Selected Shape</button>
+                            <button id="delete-button" class="btn btn-small" onclick="return false;"><span class="icon-delete"></span> Delete Shape</button>
                         </div>
                     </div>
                     <div id="gmap"></div>
@@ -265,6 +305,7 @@ function editMap($row) {
         <input type="hidden" name="data" id="gmap_data" value="<?php echo @$row->data; ?>" />
         <input type="hidden" name="center" id="gmap_center" value="<?php echo @json_encode($row->center); ?>" />
         <input type="hidden" name="zoom" id="gmap_zoom" value="<?php echo @$row->zoom; ?>" />
+        <input type="hidden" name="mapTypeId" id="gmap_mapTypeId" value="<?php echo @$row->mapTypeId; ?>" />
         <input type="hidden" name="task" value="" />
         <input type="hidden" name="view" value="map" />
         <input type="hidden" name="option" value="com_gmap" />
