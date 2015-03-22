@@ -67,7 +67,7 @@ class GmapControllerMap extends JControllerForm {
             // constructing the map object
             $map = new GmapTableMap;
             $map->set('name', JRequest::getVar('name'));
-            $map->set('data', JRequest::getVar('data'));
+            $map->set('data', $_REQUEST['data']);
             $map->set('center', JRequest::getVar('center'));
             $map->set('zoom', JRequest::getVar('zoom'));
             $map->set('mapTypeId', JRequest::getVar('mapTypeId'));
@@ -97,7 +97,7 @@ class GmapControllerMap extends JControllerForm {
 
 
             $map->set('name', JRequest::getVar('name'));
-            $map->set('data', JRequest::getVar('data'));
+            $map->set('data', $_REQUEST['data']);
             $map->set('center', JRequest::getVar('center'));
             $map->set('zoom', JRequest::getVar('zoom'));
             $map->set('mapTypeId', JRequest::getVar('mapTypeId'));

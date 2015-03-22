@@ -187,6 +187,23 @@ function editMap($row) {
             selectColor(colors[0]);
         }
 
+        function saveInfoWindow(btn) {
+            selectedShape.setTitle(jQuery(btn).parent().find("input[name='marker_title']").val());
+            selectedShape.contentHTML = jQuery(btn).parent().find("textarea[name='marker_html']").val();
+        }
+
+        function infoWindowToggle(btn) {
+            if(jQuery(btn).text() == 'View') {
+                selectedShape.infoWindow.setContent(selectedShape.contentHTML + '<br /><br /><a href="#" onclick="infoWindowToggle(this); return false;">Edit</a>');
+            } else {
+                jQuery('#infoWindowContent').find("input[name='marker_title']").attr('value', selectedShape.getTitle());
+                jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.defaultValue = selectedShape.contentHTML});
+                selectedShape.infoWindow.setContent(document.getElementById('infoWindowContent').innerHTML);
+                jQuery('#infoWindowContent').find("input[name='marker_title']").attr('value', '');
+                jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.defaultValue = ''});
+            }
+        }
+
         function initialize() {
             var map = new google.maps.Map(document.getElementById('gmap'), {
                 zoom: <?php echo $row->zoom; ?>,
@@ -239,7 +256,7 @@ function editMap($row) {
                 setSelection(newShape);
 
                 if(newShape.type == 'marker') {
-                    newShape.infoWindow = new google.maps.InfoWindow({content: 'my test'});
+                    newShape.infoWindow = new google.maps.InfoWindow({content: document.getElementById('infoWindowContent').innerHTML});
                     (function(map,marker) {google.maps.event.addListener(marker, 'click', function() {marker.infoWindow.open(map, marker);})})(drawingManager.map, newShape);
                 }
 
@@ -259,7 +276,11 @@ function editMap($row) {
                 setSelection(gmap_data[i]);
                 (function(newShape) {google.maps.event.addListener(newShape, 'click', function() {setSelection(newShape);});})(gmap_data[i]);
                 if(gmap_data[i].type == 'marker') {
-                    gmap_data[i].infoWindow = new google.maps.InfoWindow({content: 'my test'});
+                    jQuery('#infoWindowContent').find("input[name='marker_title']").attr('value', gmap_data[i].getTitle());
+                    jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.defaultValue = gmap_data[i].contentHTML});
+                    gmap_data[i].infoWindow = new google.maps.InfoWindow({content: document.getElementById('infoWindowContent').innerHTML});
+                    jQuery('#infoWindowContent').find("input[name='marker_title']").attr('value', '');
+                    jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.defaultValue = ''});
                     (function(map,marker) {google.maps.event.addListener(marker, 'click', function() {marker.infoWindow.open(map, marker);})})(drawingManager.map, gmap_data[i]);
                 }
             }
@@ -310,6 +331,12 @@ function editMap($row) {
         </fieldset>
 
         <div class="clr"></div>
+
+        <div id="infoWindowContent" style="display:none;">
+             Marker Title: <input name="marker_title" onchange="saveInfoWindow(this)" value="" /><br /><br />
+             Marker HTML: <textarea name="marker_html" onchange="saveInfoWindow(this)"></textarea><br /><br />
+             <a href="#" onclick="infoWindowToggle(this);return false;">View</a>
+        </div>
 
         <input type="hidden" name="data" id="gmap_data" value="<?php echo @$row->data; ?>" />
         <input type="hidden" name="center" id="gmap_center" value="<?php echo @json_encode($row->center); ?>" />

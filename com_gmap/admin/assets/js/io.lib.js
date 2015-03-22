@@ -22,6 +22,11 @@ var IO = {
                   break;
                case 'MARKER':
                    tmp.position = [shape.getPosition().lat(), shape.getPosition().lng()];
+                   tmp.title = shape.getTitle();
+                   if(typeof shape.contentHTML != 'undefined')
+                       tmp.contentHTML = shape.contentHTML;
+                   else
+                       tmp.contentHTML = '';
                    tmp.draggable = true;
                    tmp.zIndex = shape.zIndex;
                    break;
@@ -89,11 +94,13 @@ var IO = {
                 case 'MARKER':
                     tmp = new google.maps.Marker({
                         position: new google.maps.LatLng(shape.position[0], shape.position[1]),
+                        title: shape.title,
                         map: map,
                         type: 'marker',
                         draggable: shape.draggable,
                         zIndex: shape.zIndex
                     });
+                    tmp.contentHTML = shape.contentHTML;
                     break;
                 case 'RECTANGLE':
                     tmp = new google.maps.Rectangle({
