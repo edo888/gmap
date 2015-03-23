@@ -23,7 +23,6 @@ $document = JFactory::getDocument();
 $document->addScript(Juri::base().'components/com_gmap/assets/js/io.lib.js');
 $document->addScript('http://maps.google.com/maps/api/js?sensor=false&libraries=drawing');
 $document->addStyleDeclaration('#panel {width:250px;font-family:Arial, sans-serif;font-size:13px;margin:10px;}
-#gmap {width:1000px;height:600px;}
 #color-palette {clear:both;}
 #customcolor {margin-left:2px;}
 .color-button {width:20px;height:20px;font-size:0;margin:2px;float:left;cursor:pointer;}
@@ -67,6 +66,10 @@ function editMap($row) {
         $row->zoom = 10;
     if(empty($row->mapTypeId))
         $row->mapTypeId = 'ROADMAP';
+    if(empty($row->width))
+        $row->with = 1000;
+    if(empty($row->height))
+        $row->height = 600;
 
     //echo '<pre>', print_r($row, true), '</pre>';
     ?>
@@ -99,6 +102,11 @@ function editMap($row) {
         var selectedColor;
         var colorButtons = {};
         var gmap_data = [];
+
+        function updateMapDimensions() {
+            document.getElementById('gmap').style.height = document.getElementById('height').value + 'px';
+            document.getElementById('gmap').style.width = document.getElementById('width').value + 'px';
+        }
 
         function clearSelection() {
             if (selectedShape) {
@@ -304,7 +312,27 @@ function editMap($row) {
                 <td>
                     <?php echo '<input class="inputbox" type="text" name="name" id="name" size="60" value="', @JRequest::getVar('name', $row->name), '" />'; ?>
                 </td>
+           </tr>
+           <tr>
+                <td width="200" class="key">
+                    <label for="width">
+                        <?php echo JText::_( 'Map Width' ); ?>
+                    </label>
+                </td>
+                <td>
+                    <?php echo '<input class="inputbox" type="text" name="width" id="width" size="5" onchange="updateMapDimensions();" value="', @JRequest::getInt('width', $row->width), '" /> px'; ?>
+                </td>
             </tr>
+            <tr>
+                <td width="200" class="key">
+                    <label for="height">
+                        <?php echo JText::_( 'Map Height' ); ?>
+                    </label>
+                </td>
+                <td>
+                    <?php echo '<input class="inputbox" type="text" name="height" id="height" size="5" onchange="updateMapDimensions();" value="', @JRequest::getInt('height', $row->height), '" /> px'; ?>
+                </td>
+           </tr>
             <?php /* <tr>
                 <td class="key" valign="top">
                     <label for="path">
@@ -324,7 +352,7 @@ function editMap($row) {
                             <button id="delete-button" class="btn btn-small" onclick="return false;"><span class="icon-delete"></span> Delete Shape</button>
                         </div>
                     </div>
-                    <div id="gmap"></div>
+                    <div id="gmap" style="width:<?php echo $row->width; ?>px;height:<?php echo $row->height; ?>px;"></div>
                 </td>
             </tr>
             </table>
@@ -346,7 +374,7 @@ function editMap($row) {
         <input type="hidden" name="view" value="map" />
         <input type="hidden" name="option" value="com_gmap" />
         <input type="hidden" name="id" value="<?php echo @$row->id; ?>" />
-         <?php echo JHtml::_('form.token'); ?>
+        <?php echo JHtml::_('form.token'); ?>
         </form>
     <?php
     }

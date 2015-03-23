@@ -38,6 +38,10 @@ jimport('joomla.filter.output');
         Joomla.tableOrdering(order, dirn, '');
     }
 </script>
+<style type="text/css">
+input.gmap_shortcode[readonly="readonly"] {outline: none;text-align: center;font-weight: normal;background-color: rgb(255, 250, 223);color: rgb(35, 60, 114);border: 1px solid rgb(190, 187, 216);cursor: text;padding: 3px 0px;border-radius: 4px;display: inline-block;width: 200px;}
+input.gmap_shortcode[readonly="readonly"]:hover {font-weight: normal;background-color: rgb(248, 240, 193);color: rgb(7, 31, 82);border: 1px solid rgb(214, 197, 152);border-radius: 9px;}
+</style>
 <form action="<?php echo JRoute::_('index.php?option=com_gmap'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if(!empty( $this->sidebar)): ?>
     <div id="j-sidebar-container" class="span2">
@@ -89,6 +93,9 @@ jimport('joomla.filter.output');
                     <th width="20%" class="title">
                         <?php echo JHTML::_('grid.sort', 'Name', 'm.name', $listDirn, $listOrder); ?>
                     </th>
+                    <th width="15%" class="nowrap">
+                        Shortcode
+                    </th>
                     <th width="1%" nowrap="nowrap">
                         <?php echo JHTML::_('grid.sort', 'ID', 'm.id', $listDirn, $listOrder); ?>
                     </th>
@@ -111,6 +118,9 @@ jimport('joomla.filter.output');
                     </td>
                     <td align="center">
                         <a href="<?php echo $link; ?>" title="<?php echo JText::_( 'Edit Map' ); ?>"><?php echo $row->name; ?></a>
+                    </td>
+                    <td align="center">
+                        <input class="gmap_shortcode" value='[gmap id=&quot;<?php echo $row->id; ?>&quot;]' onclick="this.select()" readonly="readonly" />
                     </td>
                     <td align="center">
                         <?php echo $row->id; ?>

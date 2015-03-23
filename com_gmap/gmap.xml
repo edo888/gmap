@@ -16,6 +16,7 @@
     <uninstall><sql><file charset="utf8" driver="mysql">uninstall.sql</file></sql></uninstall>
 
     <files folder="site">
+        <folder>assets</folder>
         <filename>index.html</filename>
     </files>
 

@@ -1,6 +1,8 @@
 CREATE TABLE IF NOT EXISTS `#__gmap_data` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(100) NOT NULL default '',
+  `height` int(100) NOT NULL default 600,
+  `width` int(100) NOT NULL default 1000,
   `data` text NOT NULL,
   `center` varchar(100) NOT NULL default '[40.169997,44.52]',
   `zoom` tinyint(2) NOT NULL default 10,
