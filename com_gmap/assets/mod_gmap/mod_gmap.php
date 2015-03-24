@@ -14,11 +14,10 @@ defined('_JEXEC') or die('Restricted access');
 //include helper class
 require_once JPATH_ADMINISTRATOR.'/components/com_gmap/helpers/helper.php';
 
+$document = JFactory::getDocument();
+$document->addScript(Juri::base().'components/com_gmap/assets/js/io.lib.js');
+$document->addScript('https://maps.google.com/maps/api/js?sensor=false');
+
 $gmap = new GMapHelper;
 $gmap->id = $params->get('gmap_id', 1);
-$gmap->module_id = $module->id;
-$gmap->type = 'module';
-$gmap->width = $params->get('width', 500);
-$gmap->height = $params->get('height', 300);
-
 echo $gmap->render_html();

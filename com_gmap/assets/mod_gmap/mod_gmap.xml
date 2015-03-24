@@ -9,23 +9,20 @@
     <authorUrl>http://2glux.com</authorUrl>
     <version>1.0.0</version>
     <description>MOD_GMAP_DESCRIPTION</description>
-    
+
     <files>
         <filename module="mod_gmap">mod_gmap.php</filename>
         <filename>index.html</filename>
     </files>
-    
+
     <languages>
         <language tag="en-GB">language/en-GB/en-GB.mod_gmap.ini</language>
     </languages>
-    
+
     <config>
         <fields name="params">
             <fieldset name="basic">
                 <field type="sql" name="gmap_id" label="MOD_GMAP_SELECT_GMAP_LABEL" default="" description="MOD_GMAP_SELECT_GMAP_DESCRIPTION" query="SELECT id AS value, name AS gmap_id FROM #__gmap_data" />
-            
-                <field name="width" type="text" default="500" label="MOD_GMAP_WIDTH_LABEL" description="MOD_GMAP_WIDTH_DESCRIPTION" />
-                <field name="height" type="text" default="300" label="MOD_GMAP_HEIGHT_LABEL" description="MOD_GMAP_HEIGHT_DESCRIPTION" />
             </fieldset>
         </fields>
     </config>
