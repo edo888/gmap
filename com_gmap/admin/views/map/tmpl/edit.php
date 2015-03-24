@@ -36,8 +36,10 @@ function editMap($row) {
     jimport('joomla.filter.output');
     JFilterOutput::objectHTMLSafe($row, ENT_QUOTES);
 
-    JHTML::_('behavior.modal');
+    jimport('joomla.application.component.helper');
+    $config = JComponentHelper::getParams('com_gmap');
 
+    JHTML::_('behavior.modal');
 
     // include colorpicker
     //JHtml::_('behavior.colorpicker');
@@ -60,14 +62,14 @@ function editMap($row) {
     ");
 
     if(empty($row->center))
-        $row->center = '[40.169997,44.52]';
+        @$row->center = '['.$config->get('center_map', '40.169997,44.52').']';
     $row->center = json_decode($row->center);
     if(empty($row->zoom))
-        $row->zoom = 10;
+        $row->zoom = $config->get('zoom_level', '10');
     if(empty($row->mapTypeId))
         $row->mapTypeId = 'ROADMAP';
     if(empty($row->width))
-        $row->with = 1000;
+        $row->width = 1000;
     if(empty($row->height))
         $row->height = 600;
 

@@ -19,6 +19,9 @@ class GMapHelper {
         $db->setQuery($query);
         $row = $db->loadObject();
 
+        if(empty($row->id))
+            return 'Cannot load map data!';
+
         $html = '<div id="gmap_' . $this->id . '" style="height:' . $row->height . 'px;width:' . $row->width . 'px;"></div>';
 
         $row->center = json_decode($row->center);

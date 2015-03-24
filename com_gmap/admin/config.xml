@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <fields>
+        <fieldset name="basic" label="Basic" description="">
+            <field name="center_map" type="text" default="40.169997,44.52" label="COM_GMAP_CENTER_MAP_LABEL" description="COM_GMAP_CENTER_MAP_DESCRIPTION" size="20" />
+            <field name="zoom_level" type="text" default="10" label="COM_GMAP_ZOOM_LEVEL_LABEL" description="COM_GMAP_ZOOM_LEVEL_DESCRIPTION" size="4" />
+       </fieldset>
+   </fields>
+</config>

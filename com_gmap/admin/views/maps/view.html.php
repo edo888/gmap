@@ -32,7 +32,7 @@ class GmapViewMaps extends JViewLegacy {
         $this->state        = $this->get('State');
 
         $this->addToolbar();
-        $this->sidebar = JHtmlSidebar::render();
+        //$this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);
     }
 
@@ -46,9 +46,10 @@ class GmapViewMaps extends JViewLegacy {
 
         JToolBarHelper::addNew('map.add');
         JToolBarHelper::editList('map.edit');
+        JToolBarHelper::custom('map.copy', 'copy', 'copy', 'Copy', true);
         JToolBarHelper::deleteList('', 'map.remove');
-        JToolBarHelper::preferences('com_maps', '550', '570', 'JOptions');
-        JToolBarHelper::help('screen.gmap.maps', true);
+        JToolBarHelper::preferences('com_gmap', '550', '570', 'JOptions');
+        //TODO: JToolBarHelper::help('screen.gmap.maps', true);
         JToolBarHelper::divider();
     }
 

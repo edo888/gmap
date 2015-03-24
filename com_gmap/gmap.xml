@@ -33,6 +33,7 @@
             <folder>views</folder>
             <folder>models</folder>
             <folder>helpers</folder>
+            <filename>config.xml</filename>
             <filename>controller.php</filename>
             <filename>gmap.php</filename>
             <filename>install.sql</filename>

@@ -38,6 +38,7 @@ class GmapControllerMap extends JControllerForm {
         $this->registerTask('edit', 'editMap');
         $this->registerTask('save', 'saveMap');
         $this->registerTask('apply', 'saveMap');
+        $this->registerTask('copy', 'copyMap');
         $this->registerTask('remove', 'removeMap');
         $this->registerTask('cancel', 'close');
 
@@ -49,7 +50,7 @@ class GmapControllerMap extends JControllerForm {
     }
 
     function editMap() {
-        $db   = JFactory::getDBO();
+        $db = JFactory::getDBO();
         $id = JRequest::getInt('id', 0);
 
         $link = 'index.php?option=com_gmap&view=map&layout=edit';
@@ -126,6 +127,19 @@ class GmapControllerMap extends JControllerForm {
             else
                 $this->setRedirect('index.php?option=com_gmap', JText::_('Unknown task'));
         }
+    }
+
+    function copyMap() {
+        $db = JFactory::getDBO();
+        $cid  = JRequest::getVar( 'cid', array(), '', 'array' );
+
+        for($i = 0, $n = count($cid); $i < $n; $i++) {
+            $query = "insert into #__gmap_data (id, name, data, center, zoom, mapTypeId, height, width) select null, concat(name, ' - Copy'), data, center, zoom, mapTypeId, height, width from #__gmap_data where id = $cid[$i]";
+            $db->setQuery($query);
+            $db->query();
+        }
+
+        $this->setRedirect('index.php?option=com_gmap&view=maps', JText::_('Map successfully copied'));
     }
 
     function removeMap() {
