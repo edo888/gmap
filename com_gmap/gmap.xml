@@ -6,7 +6,7 @@
     <copyright>Copyright (c) 2014 - 2015 2GLux. All rights reserved.</copyright>
     <authorEmail>info@2glux.com</authorEmail>
     <authorUrl>http://2glux.com</authorUrl>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <license>GNU/GPL</license>
     <description>COM_GMAP_DESCRIPTION</description>
 
@@ -14,6 +14,10 @@
 
     <install><sql><file charset="utf8" driver="mysql">install.sql</file></sql></install>
     <uninstall><sql><file charset="utf8" driver="mysql">uninstall.sql</file></sql></uninstall>
+
+    <updateservers>
+        <server type="extension" name="2GLux" priority="1">http://2glux.com/downloads/files/free/gmap.xml</server>
+    </updateservers>
 
     <files folder="site">
         <folder>assets</folder>
