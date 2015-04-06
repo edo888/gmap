@@ -41,15 +41,16 @@ function editMap($row) {
 
     JHTML::_('behavior.modal');
 
-    // include colorpicker
-    //JHtml::_('behavior.colorpicker');
-    if(version_compare(JVERSION, '3.0', '<') == 1)
+    if(version_compare(JVERSION, '3.0', '<') == 1) {
         JFactory::getDocument()->addScript('https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');
-    else
+        JFactory::getDocument()->addScript(Juri::base().'components/com_gmap/assets/js/jquery.minicolors.min.js');
+        JFactory::getDocument()->addStyleSheet(Juri::base().'components/com_gmap/assets/css/jquery.minicolors.css');
+    } else {
         JHtml::_('jquery.framework');
+        JHtml::_('script', 'jui/jquery.minicolors.min.js', false, true);
+        JHtml::_('stylesheet', 'jui/jquery.minicolors.css', false, true);
+    }
 
-    JHtml::_('script', 'jui/jquery.minicolors.min.js', false, true);
-    JHtml::_('stylesheet', 'jui/jquery.minicolors.css', false, true);
     JFactory::getDocument()->addScriptDeclaration("
         jQuery(document).ready(function (){
                 jQuery('.minicolors').each(function() {
