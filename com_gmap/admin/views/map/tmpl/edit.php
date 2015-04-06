@@ -352,7 +352,7 @@ function editMap($row) {
             </tr> */ ?>
 
             <tr>
-                <td colspan="2" style="position:absolute;">
+                <td colspan="2">
                     <div id="panel">
                         <div id="color-palette"><input type="text" name="customcolor" id="customcolor" class="minicolors minicolors-with-opacity" value="#000000" /></div>
                         <div>
