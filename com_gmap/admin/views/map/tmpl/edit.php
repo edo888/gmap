@@ -21,7 +21,7 @@ $row = $db->loadObject();
 
 $document = JFactory::getDocument();
 $document->addScript(Juri::base().'components/com_gmap/assets/js/io.lib.js');
-$document->addScript('http://maps.google.com/maps/api/js?sensor=false&libraries=drawing');
+$document->addScript('https://maps.google.com/maps/api/js?sensor=false&libraries=drawing');
 $document->addStyleDeclaration('#panel {width:250px;font-family:Arial, sans-serif;font-size:13px;margin:10px;}
 #color-palette {clear:both;}
 #customcolor {margin-left:2px;}
@@ -43,7 +43,11 @@ function editMap($row) {
 
     // include colorpicker
     //JHtml::_('behavior.colorpicker');
-    JHtml::_('jquery.framework');
+    if(version_compare(JVERSION, '3.0', '<') == 1)
+        JFactory::getDocument()->addScript('https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');
+    else
+        JHtml::_('jquery.framework');
+
     JHtml::_('script', 'jui/jquery.minicolors.min.js', false, true);
     JHtml::_('stylesheet', 'jui/jquery.minicolors.css', false, true);
     JFactory::getDocument()->addScriptDeclaration("
