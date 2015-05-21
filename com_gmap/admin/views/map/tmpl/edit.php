@@ -212,10 +212,10 @@ function editMap($row) {
                 selectedShape.infoWindow.setContent(selectedShape.contentHTML + '<br /><br /><a href="#" onclick="infoWindowToggle(this); return false;">Edit</a>');
             } else {
                 jQuery('#infoWindowContent').find("input[name='marker_title']").attr('value', selectedShape.getTitle());
-                jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.defaultValue = selectedShape.contentHTML});
+                jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.value = selectedShape.contentHTML});
                 selectedShape.infoWindow.setContent(jQuery('#infoWindowContent').html());
                 jQuery('#infoWindowContent').find("input[name='marker_title']").attr('value', '');
-                jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.defaultValue = ''});
+                jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.value = ''});
             }
         }
 
@@ -292,10 +292,10 @@ function editMap($row) {
                 (function(newShape) {google.maps.event.addListener(newShape, 'click', function() {setSelection(newShape);});})(gmap_data[i]);
                 if(gmap_data[i].type == 'marker') {
                     jQuery('#infoWindowContent').find("input[name='marker_title']").attr('value', gmap_data[i].getTitle());
-                    jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.defaultValue = gmap_data[i].contentHTML});
+                    jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.value = gmap_data[i].contentHTML});
                     gmap_data[i].infoWindow = new google.maps.InfoWindow({content: jQuery('#infoWindowContent').html()});
                     jQuery('#infoWindowContent').find("input[name='marker_title']").attr('value', '');
-                    jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.defaultValue = ''});
+                    jQuery('#infoWindowContent').find("textarea[name='marker_html']").each(function(){this.value = ''});
                     (function(map,marker) {google.maps.event.addListener(marker, 'click', function() {marker.infoWindow.open(map, marker);})})(drawingManager.map, gmap_data[i]);
                 }
             }
