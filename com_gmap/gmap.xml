@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade">
     <name>COM_GMAP</name>
-    <creationDate>Manch 2015</creationDate>
+    <creationDate>March 2015</creationDate>
     <author>2GLux</author>
-    <copyright>Copyright (c) 2014 - 2015 2GLux. All rights reserved.</copyright>
+    <copyright>Copyright (c) 2008 - 2015 2GLux. All rights reserved.</copyright>
     <authorEmail>info@2glux.com</authorEmail>
     <authorUrl>http://2glux.com</authorUrl>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <license>GNU/GPL</license>
     <description>COM_GMAP_DESCRIPTION</description>
 
